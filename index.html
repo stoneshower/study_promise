@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    var taskA = function() {
+        return new Promise(function(resolve, reject){
+            setTimeout(function(){
+                console.log('Task A');
+                resolve();
+                // reject(new Error('Error'))
+            }, 1000)
+        })
+    }
+    
+    var taskB = function() {
+        return new Promise(function(resolve, reject){
+            setTimeout(function(){
+                console.log('Task B');
+                resolve();
+            }, 1000)
+        })
+    }
+
+    var taskC = function() {
+        return new Promise(function(resolve, reject){
+            setTimeout(function(){
+                console.log('Task C');
+                resolve();
+            }, 1000)
+        })
+    }
+
+    function doAsync(){
+        return new Promise(function(resolve, reject){
+            setTimeout(function(){
+                resolve('Success!')
+            },4000)
+        })
+    }
+
+    doAsync()
+        .then(function(value){
+            console.log(value)
+        })
+        .then(taskA)
+        .then(taskB)
+        .then(taskC)
+        .catch(function(error){
+            console.log(error)
+        })
+
+
+    var task1 = new Promise(function(resolve, reject){
+            setTimeout(function(){
+                console.log('Task 1');
+                resolve();
+            }, 14)
+        })
+    
+    var task2 = new Promise(function(resolve, reject){
+            setTimeout(function(){
+                console.log('Task 2');
+                resolve();
+            }, 16)
+        })
+
+    var before = new Date();
+    Promise.all([task1, task2])
+        .then(function(){
+            var after = new Date();
+            var result = after.getTime() - before.getTime();
+            console.log(result)
+        })
+        
+</script>
+</body>
+</html>
